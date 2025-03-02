@@ -1,15 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace DataAccesslayer.Entities
+﻿namespace DataAccesslayer.Entities
 {
     /// <summary>
     /// Информация об анкете
     /// </summary>
     public class Survey
     {
+        public int Id { get; set; }
+
+        /// <summary>
+        /// Название анкеты
+        /// </summary>
+        public string Title { get; set; }
+
+        /// <summary>
+        /// Описание анкеты
+        /// </summary>
+        public string SurveyDescription { get; set; }
+
+        /// <summary>
+        /// Вопросы анкеты
+        /// </summary>
+        public ICollection<Question> Questions { get; set; }
     }
 }

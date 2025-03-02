@@ -1,15 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace DataAccesslayer.Entities
+﻿namespace DataAccesslayer.Entities
 {
     /// <summary>
-    /// вариант ответа на вопрос анкеты
+    /// Вариант ответа на вопрос анкеты
     /// </summary>
     public class Answer
     {
+        public int Id { get; set; }
+
+        /// <summary>
+        /// Один из вариантов ответа (не может принимать null)
+        /// </summary>
+        public string VariantAnswer { get; set; }
+
+        /// <summary>
+        /// К какому вопросу соответвует ответ
+        /// </summary>
+        //public Question Question { get; set; }
     }
 }
