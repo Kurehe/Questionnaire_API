@@ -1,6 +1,7 @@
 
 using BusinessLogicLayer;
 using DataAccesslayer;
+using DataAccesslayer.AppContext;
 
 namespace Questionnaire_API
 {
@@ -31,11 +32,19 @@ namespace Questionnaire_API
             {
                 app.UseHsts();
 
+                // Включение свагера для отладки в режиме разработки
                 //app.UseSwagger();
                 //app.UseSwaggerUI();
             }
 
-            app.UseHttpsRedirection();
+            // ToDo написать логику приведения БД к конечному состоянию, после которого можно взаимодействовать с АПИ
+            using (var scope = app.Services.CreateScope())
+            {
+                SeedData.InitializeDataBaseState(scope.ServiceProvider);
+            }
+
+
+                app.UseHttpsRedirection();
             app.UseAuthorization();
             app.MapControllers();
 

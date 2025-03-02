@@ -12,7 +12,7 @@ namespace BusinessLogicLayer
     {
         public static void Add_BLL(this IServiceCollection services, IConfiguration configuration)
         {
-
+            services.AddScoped<IQuestionService, QuestionService>();
         }
     }
 }

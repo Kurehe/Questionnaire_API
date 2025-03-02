@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using BusinessLogicLayer;
+using Microsoft.AspNetCore.Mvc;
 using Questionnaire_API.Model;
 
 namespace Questionnaire_API.Controllers
@@ -8,18 +9,13 @@ namespace Questionnaire_API.Controllers
     public class QuestionsController : Controller
     {
         private readonly ILogger<QuestionsController> logger;
+        private readonly IQuestionService questionService;
 
-        public QuestionsController(ILogger<QuestionsController> logger)
+        public QuestionsController(ILogger<QuestionsController> logger, IQuestionService question)
         {
             this.logger = logger;
+            questionService = question;
         }
-
-        //[HttpGet]
-        //public IActionResult Index()
-        //{
-        //    logger.Log(LogLevel.Information, "get index !");
-        //    return Ok("Hello world!");
-        //}
 
         /// <summary>
         /// Получение данных вопроса
@@ -29,35 +25,31 @@ namespace Questionnaire_API.Controllers
         [HttpGet]
         public async Task<QuestionResponse> GetDataQuestion([FromQuery]GetQuestionRequest request)
         {
-            if (request.IdQuestion == 1)
-            {
-                logger.Log(LogLevel.Information, $"get data Question on id: {request.IdQuestion}");
-            }
+            var data = await questionService.GetQuestionById(request.RespondentGuid, request.IdQuestion);
 
-            var respose = new QuestionResponse {
-                QuestionText = "new text!",
-                Answers = new Dictionary<int, string>
-                {
-                    {1, "вариант 1" },
-                    {2, "вариант 2" },
-                    {3, "вариант 3" },
-                    {4, "Вариант 4" }
-                }
+            QuestionResponse response = new QuestionResponse
+            {
+                QuestionText = data.TextQuestion,
+                Answers = data.Answers
             };
 
-            await Task.Delay(500);
-
-            return respose;
+            return response;
         }
 
+        /// <summary>
+        /// Сохранение результатов и возвращение Ид следующего вопроса
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns>Возвращаемый Ид может быть равен Null в случае если вопросы в анкете кончились</returns>
         [HttpPost]
-        public async Task<int> SaveAnswerQuestion(SaveAnswerRequest request)
+        public async Task<int?> SaveAnswerQuestion(SaveAnswerRequest request)
         {
-            logger.Log(LogLevel.Information, $"Guid {request.RespondentGuid}, Id Question: {request.IdQuestion}, Id Answer: {request.IdAnswer}");
+            await questionService.UpdateAnswerRespondent(request.RespondentGuid, request.IdQuestion, request.IdAnswer);
+            int? nextQuetId = await questionService.NextIdQuestion(request.RespondentGuid);
 
-            await Task.Delay(500);
-
-            int nextQuetId = 1;
+            //logger.Log(LogLevel.Information, $"Guid {request.RespondentGuid}, Id Question: {request.IdQuestion}, Id Answer: {request.IdAnswer}");
+            //await Task.Delay(500);
+            //int nextQuetId = 1;
 
             return nextQuetId;
         }
