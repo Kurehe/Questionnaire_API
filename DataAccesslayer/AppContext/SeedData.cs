@@ -16,7 +16,7 @@ namespace DataAccesslayer.AppContext
             {
                 if (!context.Surveys.Any())
                 {
-                    var survery = new Survey
+                    var survery = new Survey    // создаем анкету
                     {
                         Title = "Опросник 1",
                         SurveyDescription = "Какое-то описание",
@@ -86,14 +86,14 @@ namespace DataAccesslayer.AppContext
                     context.SaveChanges();
                 }
 
+                var lastSurvery = context.Surveys.OrderBy(x => x.Id).LastOrDefault();
+                
                 if (!context.Interviews.Any())
                 {
-                    var survery = context.Surveys.Last(); // переделать!
-
                     var interview = new Interview   // добавление респондента, если его нет
                     {
                         Id = Guid.NewGuid(),
-                        Surveys = survery,
+                        Survey = lastSurvery,
                         StartSurveyTime = DateTime.UtcNow
                     };
 
@@ -102,19 +102,18 @@ namespace DataAccesslayer.AppContext
                 }
                 else
                 {
-                    // если респондент есть, то проверить сколько он дал ответов на анкету
-                    int countQuestion = context.Surveys.Last().Questions.Count();
-                    int countQuestRespondent = context.Interviews.Last().Results.Count();
+                    var res = context.Interviews.Where(x => x.IsSurveyCompleted == false).Any();
 
-                    if (countQuestion <= countQuestRespondent) // Если респондент на всё ответил, то создать нового респондента
+                    // добавление респондента, если нету не ответивших респондентов
+                    if (!res)
                     {
-                        var interview = new Interview   // добавление респондента, если его нет
+                        var interview = new Interview
                         {
                             Id = Guid.NewGuid(),
-                            Surveys = context.Surveys.Last(),
+                            Survey = lastSurvery,
                             StartSurveyTime = DateTime.UtcNow
                         };
-                        
+
                         context.Interviews.Add(interview);
                         context.SaveChanges();
                     }

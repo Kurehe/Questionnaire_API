@@ -9,12 +9,6 @@
         /// Ид вопроса
         /// </summary>
         public int Id { get; set; }
-
-        /// <summary>
-        /// То к какому опроснику (анкете) относиться вопрос
-        /// </summary>
-        public Survey Survey { get; set; }
-
         /// <summary>
         /// Текст вопроса
         /// </summary>
@@ -24,9 +18,20 @@
         /// </summary>
         public string? ExplanQuestion { get; set; }
 
+
+        public int SurveyId { get; set; }
+        /// <summary>
+        /// То к какому опроснику (анкете) относиться вопрос
+        /// </summary>
+        public Survey Survey { get; set; } = null!;
+
+
         /// <summary>
         /// Варианты ответов на вопрос
         /// </summary>
-        public ICollection<Answer> Answer { get; set; }
+        public ICollection<Answer> Answer { get; set; } = new List<Answer>();
+
+
+        public ICollection<Result> Results { get; set; } = new List<Result>();
     }
 }

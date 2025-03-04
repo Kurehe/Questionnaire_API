@@ -17,9 +17,16 @@
         /// </summary>
         public string SurveyDescription { get; set; }
 
+
         /// <summary>
         /// Вопросы анкеты
         /// </summary>
-        public ICollection<Question> Questions { get; set; }
+        public ICollection<Question> Questions { get; set; } = new List<Question>();
+        
+        /// <summary>
+        /// Респонденты проходящие анкету
+        /// </summary>
+        public ICollection<Interview> Interviews { get; set; } = new List<Interview>();
+
     }
 }

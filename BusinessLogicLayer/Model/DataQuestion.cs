@@ -10,6 +10,6 @@
         /// <summary>
         /// Словарь ответов (Id ответа, строка ответа)
         /// </summary>
-        public Dictionary<int, string> Answers { get; set; }
+        public Dictionary<int, string> Answers { get; set; } = new Dictionary<int, string>();
     }
 }

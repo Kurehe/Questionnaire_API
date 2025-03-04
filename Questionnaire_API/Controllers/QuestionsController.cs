@@ -20,20 +20,24 @@ namespace Questionnaire_API.Controllers
         /// <summary>
         /// Получение данных вопроса
         /// </summary>
-        /// <param name="request">Guid пользователя и Id вопроса</param>
-        /// <returns></returns>
-        [HttpGet]
-        public async Task<QuestionResponse> GetDataQuestion([FromQuery]GetQuestionRequest request)
+        /// <param name="QuestionId">Id вопроса</param>
+        /// <returns>Возвращает вопрос и варианты ответа на него</returns>
+        [HttpGet("{QuestionId:int}")]
+        public async Task<QuestionResponse?> GetDataQuestion([FromRoute] int QuestionId)
         {
-            var data = await questionService.GetQuestionById(request.RespondentGuid, request.IdQuestion);
+            var data = await questionService.GetQuestionById(QuestionId);
 
-            QuestionResponse response = new QuestionResponse
+            if (data != null)
             {
-                QuestionText = data.TextQuestion,
-                Answers = data.Answers
-            };
+                QuestionResponse response = new QuestionResponse
+                {
+                    QuestionText = data.TextQuestion,
+                    Answers = data.Answers
+                };
 
-            return response;
+                return response;
+            }
+            return null;
         }
 
         /// <summary>
@@ -42,14 +46,10 @@ namespace Questionnaire_API.Controllers
         /// <param name="request"></param>
         /// <returns>Возвращаемый Ид может быть равен Null в случае если вопросы в анкете кончились</returns>
         [HttpPost]
-        public async Task<int?> SaveAnswerQuestion(SaveAnswerRequest request)
+        public async Task<int?> SaveAnswerQuestion(Guid RespondentGuid, int IdQuestion, int IdAnswer)
         {
-            await questionService.UpdateAnswerRespondent(request.RespondentGuid, request.IdQuestion, request.IdAnswer);
-            int? nextQuetId = await questionService.NextIdQuestion(request.RespondentGuid);
-
-            //logger.Log(LogLevel.Information, $"Guid {request.RespondentGuid}, Id Question: {request.IdQuestion}, Id Answer: {request.IdAnswer}");
-            //await Task.Delay(500);
-            //int nextQuetId = 1;
+            await questionService.UpdateAnswerRespondent(RespondentGuid, IdQuestion, IdAnswer);
+            int? nextQuetId = await questionService.NextIdQuestion(RespondentGuid);
 
             return nextQuetId;
         }

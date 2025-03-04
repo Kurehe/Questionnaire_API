@@ -7,10 +7,15 @@
     {
         public int Id { get; set; }
 
-        // ссылка на вопрос (один к одному)
-        public Question QuestionId { get; set; }
+        public Guid InterviewId { get; set; }
+        public Interview Interview { get; set; }
 
-        // ссылка на ответ от этого опроса (один к одному)
-        public Answer AnswerId { get; set; }
+
+        public int? QuestionId { get; set; }
+        public Question Question { get; set; }      // ссылка на вопрос (один к одному)
+
+
+        public int? AnswerId { get; set; }
+        public Answer Answer { get; set; }          // ссылка на ответ от этого опроса (один к одному)
     }
 }

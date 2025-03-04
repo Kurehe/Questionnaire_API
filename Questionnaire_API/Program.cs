@@ -17,13 +17,10 @@ namespace Questionnaire_API
             // Add services to the container.
             services.AddControllers();
 
-            services.Add_DAL(config);
-            services.Add_BLL(config);
+            services.Add_DAL(config);   // добавление уровня работы с данными
+            services.Add_BLL(config);   // добавление уровня бизнес логики
 
             services.AddSwaggerGen();
-
-            // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-            //services.AddOpenApi();
 
             var app = builder.Build();
 
@@ -33,24 +30,20 @@ namespace Questionnaire_API
                 app.UseHsts();
 
                 // Включение свагера для отладки в режиме разработки
-                //app.UseSwagger();
-                //app.UseSwaggerUI();
+                app.UseSwagger();
+                app.UseSwaggerUI();
             }
 
-            // ToDo написать логику приведения БД к конечному состоянию, после которого можно взаимодействовать с АПИ
+            // Приведение БД к состоянию когда можно взаимодействовать с API
             using (var scope = app.Services.CreateScope())
             {
                 SeedData.InitializeDataBaseState(scope.ServiceProvider);
             }
 
-
-                app.UseHttpsRedirection();
+            app.UseHttpsRedirection();
             app.UseAuthorization();
             app.MapControllers();
-
-            app.UseSwagger();
-            app.UseSwaggerUI();
-
+            
             app.Run();
         }
     }
