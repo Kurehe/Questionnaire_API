@@ -72,7 +72,7 @@ namespace BusinessLogicLayer
             var qustions = await repository.GetQuestionsInterviewByGuid(guid);
 
             // сравнить ответы на вопросы и вопросы анкеты
-            // т.е. если респондент ответил на все вопросы анкеты выставитьдля него флаг завершения опроса
+            // т.е. если респондент ответил на все вопросы анкеты выставить для него флаг завершения опроса
             // а если нет выдать айди следующего вопроса
 
             IEnumerable<int> qustIds = qustions.Select(x => x.Id);

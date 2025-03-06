@@ -16,7 +16,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development",
         "POSTGRES_DB_HOST": "localhost",
         "POSTGRES_DB_PORT": "5432",
-        "POSTGRES_DB_NAME": "Questionnaire",
+        "POSTGRES_DB": "Questionnaire",
         "POSTGRES_USER": "postgres",
         "POSTGRES_PASSWORD": "123"
       },

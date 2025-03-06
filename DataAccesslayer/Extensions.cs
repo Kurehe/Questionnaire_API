@@ -9,11 +9,11 @@ namespace DataAccesslayer
     {
         public static void Add_DAL(this IServiceCollection services, IConfiguration configuration)
         {
-            string? hostdb = configuration.GetSection("POSTGRES_DB_HOST").Value;
-            string? portdb = configuration.GetSection("POSTGRES_DB_PORT").Value;
-            string? namedb = configuration.GetSection("POSTGRES_DB_NAME").Value;
+            string hostdb = configuration.GetSection("POSTGRES_DB_HOST").Value ?? "localhost";
+            string portdb = configuration.GetSection("POSTGRES_DB_PORT").Value ?? "5432";
+            string? namedb = configuration.GetSection("POSTGRES_DB").Value;
 
-            string? usernamedb = configuration.GetSection("POSTGRES_USER").Value;
+            string usernamedb = configuration.GetSection("POSTGRES_USER").Value ?? "postgres";
             string? passworddb = configuration.GetSection("POSTGRES_PASSWORD").Value;
 
             services.AddDbContext<DataContext>(x =>
