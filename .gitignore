@@ -363,3 +363,4 @@ MigrationBackup/
 FodyWeavers.xsd
 /BusinessLogicLayer/заметки по строкам подключения.txt
 /Questionnaire_API/Controllers/WeatherForecastController.cs
+/Questionnaire_API/Dockerfile.original
