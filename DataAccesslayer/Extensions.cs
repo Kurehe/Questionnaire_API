@@ -18,7 +18,9 @@ namespace DataAccesslayer
 
             services.AddDbContext<DataContext>(x =>
             {
-                x.UseNpgsql($"Host={hostdb};Port={portdb};Database={namedb};Username={usernamedb};Password={passworddb}");
+                x.UseNpgsql($"Host={hostdb};Port={portdb};Database={namedb};Username={usernamedb};Password={passworddb}")
+                    .LogTo(Console.WriteLine)
+                    ;
             });
 
             services.AddScoped<IQuestionsRepository, QuestionsRepository>();

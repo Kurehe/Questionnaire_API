@@ -28,8 +28,14 @@
       "launchBrowser": true,
       "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/swagger/index.html",
       "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
         "ASPNETCORE_HTTPS_PORTS": "8081",
-        "ASPNETCORE_HTTP_PORTS": "8080"
+        "ASPNETCORE_HTTP_PORTS": "8080",
+        "POSTGRES_DB_HOST": "localhost",
+        "POSTGRES_DB_PORT": "9435",
+        "POSTGRES_DB": "Questionnaire",
+        "POSTGRES_USER": "postgres",
+        "POSTGRES_PASSWORD": "123"
       },
       "publishAllPorts": true,
       "useSSL": true,

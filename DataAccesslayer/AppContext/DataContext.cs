@@ -28,7 +28,8 @@ namespace DataAccesslayer.AppContext
 
         public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
-            Database.EnsureCreated();
+            // Используем существующую бд (если она конечно есть)
+            //Database.EnsureCreated();
         }
     }
 }
