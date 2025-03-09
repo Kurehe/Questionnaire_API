@@ -55,7 +55,7 @@ Questionnaire_API - это простой проект REST API, ответ на
 ### Для запуска приложения в docker-compose, надо выполнить команду:
     docker compose up --build
 
-Для отображения Swagger UI, слеует перейти на следующий адрес [открыть Swagger UI приложения](http://localhost:8080/swagger/index.html, "Прямая ссылка на ендпоинты приложения") :
+Для отображения Swagger UI, слеует перейти на следующий адрес [открыть Swagger UI приложения](http://localhost:8080/swagger/index.html "Прямая ссылка на ендпоинты приложения") :
 
     localhost:8080/swagger/index.html
 
