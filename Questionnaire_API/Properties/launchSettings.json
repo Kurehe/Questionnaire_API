@@ -35,7 +35,7 @@
         "POSTGRES_DB_PORT": "9435",
         "POSTGRES_DB": "Questionnaire",
         "POSTGRES_USER": "postgres",
-        "POSTGRES_PASSWORD": "123"
+        "POSTGRES_PASSWORD": "1234"
       },
       "publishAllPorts": true,
       "useSSL": true,

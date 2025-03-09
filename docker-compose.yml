@@ -1,4 +1,4 @@
-#version: '3.9'
+version: '3.9'
 
 services:
   questionnaire_api:
@@ -12,18 +12,16 @@ services:
       ASPNETCORE_HTTP_PORTS: 8080
       ASPNETCORE_HTTPS_PORTS: 8081
       POSTGRES_DB_HOST: db_postgre
-      POSTGRES_DB_PORT: 9435
+      POSTGRES_DB_PORT: 5432
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: 1234
       POSTGRES_DB: Questionnaire
-    # depends_on:
-    #   db_postgre:
-    #     condition: service_completed_successfully
+    depends_on:
+      db_postgre:
+        condition: service_healthy
     ports:
     - "8081:8081"
     - "8080:8080"
-    networks:
-    - netone
 
   db_postgre:
     container_name: postgres_container1
@@ -34,21 +32,15 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_DB: Questionnaire
       PGDATA: /var/lib/postgresql/data
-    # healthcheck:
-    #   test: ["CMD", pg_isready -U postgres -d Questionnaire"]
-    #   interval: 5s
-    #   timeout: 3s
-    #   retries: 3
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d Questionnaire"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
     volumes:
     - db_mount:/var/lib/postgresql/data:rw
     ports:
     - "9435:5432"
-    networks:
-    - netone
-
-networks:
-  netone:
-    driver: bridge
 
 volumes:
   db_mount:

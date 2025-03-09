@@ -19,7 +19,7 @@ namespace DataAccesslayer
             services.AddDbContext<DataContext>(x =>
             {
                 x.UseNpgsql($"Host={hostdb};Port={portdb};Database={namedb};Username={usernamedb};Password={passworddb}")
-                    .LogTo(Console.WriteLine)
+                    //.LogTo(Console.WriteLine)
                     ;
             });
 
