@@ -1,5 +1,6 @@
 ﻿using DataAccesslayer.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace DataAccesslayer.AppContext
@@ -10,10 +11,16 @@ namespace DataAccesslayer.AppContext
         /// Инициализация БД - приведение её к моменту когда можно взаимодействовать с АПИ
         /// </summary>
         /// <param name="provider"></param>
-        public static void InitializeDataBaseState(IServiceProvider provider)
+        public static void InitializeDataBaseState(IServiceProvider provider, IConfiguration configuration)
         {
             using (var context = new DataContext(provider.GetRequiredService<DbContextOptions<DataContext>>()))
             {
+                string createDB_Flag = configuration.GetSection("ASPNETCORE_CREATE_DB").Value ?? "false";
+                if (createDB_Flag != "false")
+                {
+                    context.Database.EnsureCreated();
+                }
+
                 if (!context.Surveys.Any())
                 {
                     var survery = new Survey    // создаем анкету

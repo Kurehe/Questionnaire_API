@@ -37,7 +37,7 @@ namespace Questionnaire_API
             // Приведение БД к состоянию когда можно взаимодействовать с API
             using (var scope = app.Services.CreateScope())
             {
-                SeedData.InitializeDataBaseState(scope.ServiceProvider);
+                SeedData.InitializeDataBaseState(scope.ServiceProvider, app.Configuration);
             }
 
             app.UseHttpsRedirection();
