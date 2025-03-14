@@ -27,7 +27,7 @@ namespace Questionnaire_API
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
-                app.UseHsts();
+                //app.UseHsts();
 
                 // Включение свагера для отладки в режиме разработки
                 app.UseSwagger();
@@ -40,7 +40,7 @@ namespace Questionnaire_API
                 SeedData.InitializeDataBaseState(scope.ServiceProvider, app.Configuration);
             }
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
             app.UseAuthorization();
             app.MapControllers();
 

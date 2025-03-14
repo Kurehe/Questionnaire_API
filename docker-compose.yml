@@ -15,7 +15,7 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: 1234
       POSTGRES_DB: Questionnaire
-    depends_on:
+    depends_on:     # ожидание момента когда PostgreSQL будет готов ожидать запросы
       db_postgre:
         condition: service_healthy
     ports:
@@ -37,10 +37,6 @@ services:
       timeout: 5s
       retries: 5
     volumes:
-    - db_mount:/var/lib/postgresql/data:rw
+    - ./pg_data:/var/lib/postgresql/data:rw     # данные бд будут храниться в папке проекта, для удобства
     ports:
     - "9435:5432"
-
-volumes:
-  db_mount:
-    name: postgr_data_qust
