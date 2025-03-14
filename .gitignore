@@ -365,3 +365,4 @@ FodyWeavers.xsd
 /Questionnaire_API/Controllers/WeatherForecastController.cs
 /Questionnaire_API/Dockerfile.original
 /docker-compose.override.yml
+/pg_data
