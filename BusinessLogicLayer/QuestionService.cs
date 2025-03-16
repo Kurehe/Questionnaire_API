@@ -58,7 +58,7 @@ namespace BusinessLogicLayer
             }
         }
 
-        public async Task<int?> NextIdQuestion(Guid guid)
+        public async Task<int> NextIdQuestion(Guid guid)
         {
             var interview = await repository.GetInterviewByGuid(guid);
 

@@ -6,7 +6,7 @@ namespace Questionnaire_API.Controllers
 {
     [ApiController]
     [Route("Questions")]
-    public class QuestionsController : Controller
+    public class QuestionsController : ControllerBase
     {
         private readonly ILogger<QuestionsController> logger;
         private readonly IQuestionService questionService;
@@ -23,7 +23,7 @@ namespace Questionnaire_API.Controllers
         /// <param name="QuestionId">Id вопроса</param>
         /// <returns>Возвращает вопрос и варианты ответа на него</returns>
         [HttpGet("{QuestionId:int}")]
-        public async Task<QuestionResponse?> GetDataQuestion([FromRoute] int QuestionId)
+        public async Task<IActionResult> GetDataQuestion([FromRoute] int QuestionId)
         {
             var data = await questionService.GetQuestionById(QuestionId);
 
@@ -35,9 +35,9 @@ namespace Questionnaire_API.Controllers
                     Answers = data.Answers
                 };
 
-                return response;
+                return Ok(response);
             }
-            return null;
+            return NotFound();
         }
 
         /// <summary>
@@ -46,12 +46,16 @@ namespace Questionnaire_API.Controllers
         /// <param name="request"></param>
         /// <returns>Возвращаемый Ид может быть равен Null в случае если вопросы в анкете кончились</returns>
         [HttpPost]
-        public async Task<int?> SaveAnswerQuestion(Guid RespondentGuid, int IdQuestion, int IdAnswer)
+        public async Task<IActionResult> SaveAnswerQuestion(Guid RespondentGuid, int IdQuestion, int IdAnswer)
         {
             await questionService.UpdateAnswerRespondent(RespondentGuid, IdQuestion, IdAnswer);
-            int? nextQuetId = await questionService.NextIdQuestion(RespondentGuid);
+            int nextQuetId = await questionService.NextIdQuestion(RespondentGuid);
 
-            return nextQuetId;
+            if (nextQuetId == 0)
+            {
+                return NoContent();
+            }
+            return Ok(nextQuetId);
         }
     }
 }

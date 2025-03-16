@@ -25,6 +25,6 @@ namespace BusinessLogicLayer
         /// </summary>
         /// <param name="guid"></param>
         /// <returns>Если респондент ответил на все вопросы то вернется 0</returns>
-        Task<int?> NextIdQuestion(Guid guid);
+        Task<int> NextIdQuestion(Guid guid);
     }
 }
