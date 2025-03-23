@@ -1,5 +1,5 @@
 ﻿using BusinessLogicLayer.Model;
-using DataAccesslayer;
+using DataAccessLayer;
 using Microsoft.Extensions.Logging;
 
 namespace BusinessLogicLayer
@@ -15,17 +15,17 @@ namespace BusinessLogicLayer
             repository = questions;
         }
 
-        public async Task<DataQuestion?> GetQuestionById(int Id)
+        public async Task<DataQuestion?> GetQuestionById(int id)
         {
-            var QuestionInfo = await repository.GetQuestionById(Id);
-            if (QuestionInfo != null)
+            var questionInfo = await repository.GetQuestionById(id);
+            if (questionInfo != null)
             {
                 DataQuestion question = new DataQuestion
                 {
-                    TextQuestion = QuestionInfo.TextQuestion,
+                    TextQuestion = questionInfo.TextQuestion,
                 };
 
-                foreach (var item in QuestionInfo.Answer)
+                foreach (var item in questionInfo.Answer)
                 {
                     question.Answers.Add(item.Id, item.VariantAnswer);
                 }
@@ -34,7 +34,7 @@ namespace BusinessLogicLayer
             return null;
         }
 
-        public async Task UpdateAnswerRespondent(Guid guid, int QuestionID, int AnswerId)
+        public async Task UpdateAnswerRespondent(Guid guid, int questionID, int answerId)
         {
             var interview = await repository.GetInterviewByGuid(guid);
 
@@ -42,14 +42,14 @@ namespace BusinessLogicLayer
             if (interview == null) { return; }
             if (interview.IsSurveyCompleted) { return; } // проверка на то прошел ли респондент опрос
 
-            var question = await repository.GetQuestionById(QuestionID);
+            var question = await repository.GetQuestionById(questionID);
             if (question == null) { return; }
 
-            if (question.Answer.FirstOrDefault(x => x.Id == AnswerId) != null)
+            if (question.Answer.FirstOrDefault(x => x.Id == answerId) != null)
             {
-                if (interview.Results.FirstOrDefault(x => x.QuestionId == QuestionID) == null)
+                if (interview.Results.FirstOrDefault(x => x.QuestionId == questionID) == null)
                 {
-                    await repository.AddAnswerRespondent(guid, QuestionID, AnswerId);
+                    await repository.AddAnswerRespondent(guid, questionID, answerId);
                 }
                 else
                 {
@@ -69,16 +69,16 @@ namespace BusinessLogicLayer
             //var resInterview = await repository.GetResultsInterviewByGuid(guid);
 
             // получить все вопросы по анкете (относительно респондента)
-            var qustions = await repository.GetQuestionsInterviewByGuid(guid);
+            var questions = await repository.GetQuestionsInterviewByGuid(guid);
 
             // сравнить ответы на вопросы и вопросы анкеты
             // т.е. если респондент ответил на все вопросы анкеты выставить для него флаг завершения опроса
             // а если нет выдать айди следующего вопроса
 
-            IEnumerable<int> qustIds = qustions.Select(x => x.Id);
-            IEnumerable<int> resQIds = interview.Results.Select(x => x.QuestionId ?? 0);
+            IEnumerable<int> questionIds = questions.Select(x => x.Id);
+            IEnumerable<int> resultQuestionsId = interview.Results.Select(x => x.QuestionId ?? 0);
 
-            int res = qustIds.Except(resQIds).FirstOrDefault();
+            int res = questionIds.Except(resultQuestionsId).FirstOrDefault();
             if (res == 0)
             {
                 await repository.InterviewSurveyComplete(guid);

@@ -1,9 +1,9 @@
-﻿using DataAccesslayer.Entities;
+﻿using DataAccessLayer.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace DataAccesslayer.AppContext
+namespace DataAccessLayer.AppContext
 {
     public class SeedData
     {

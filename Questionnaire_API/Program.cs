@@ -1,7 +1,6 @@
-
 using BusinessLogicLayer;
-using DataAccesslayer;
-using DataAccesslayer.AppContext;
+using DataAccessLayer;
+using DataAccessLayer.AppContext;
 
 namespace Questionnaire_API
 {
@@ -18,7 +17,7 @@ namespace Questionnaire_API
             services.AddControllers();
 
             services.Add_DAL(config);   // добавление уровня работы с данными
-            services.Add_BLL(config);   // добавление уровня бизнес логики
+            services.Add_BLL();         // добавление уровня бизнес логики
 
             services.AddSwaggerGen();
 

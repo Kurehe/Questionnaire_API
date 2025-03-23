@@ -8,11 +8,11 @@
         /// <summary>
         /// Текст вопроса
         /// </summary>
-        public string QuestionText { get; set; }
+        public string? QuestionText { get; set; }
         
         /// <summary>
         /// Словарь ответов (Id ответа, строка ответа)
         /// </summary>
-        public Dictionary<int, string> Answers { get; set; }
+        public required Dictionary<int, string> Answers { get; set; }
     }
 }

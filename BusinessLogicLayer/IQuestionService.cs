@@ -7,18 +7,18 @@ namespace BusinessLogicLayer
         /// <summary>
         /// Получение информации о вопросе по Id вопроса
         /// </summary>
-        /// <param name="Id">Id вопроса</param>
+        /// <param name="id">Id вопроса</param>
         /// <returns></returns>
-        Task<DataQuestion?> GetQuestionById(int Id);
+        Task<DataQuestion?> GetQuestionById(int id);
 
         /// <summary>
         /// Обновление ответов респондента
         /// </summary>
         /// <param name="guid">уникальный идентификатор респондента</param>
-        /// <param name="QuestionID">Айди вопроса</param>
-        /// <param name="AnswerId">Айди ответа</param>
+        /// <param name="questionID">Айди вопроса</param>
+        /// <param name="answerId">Айди ответа</param>
         /// <returns></returns>
-        Task UpdateAnswerRespondent(Guid guid, int QuestionID, int AnswerId);
+        Task UpdateAnswerRespondent(Guid guid, int questionID, int answerId);
 
         /// <summary>
         /// Получить следующий вопрос по Guid

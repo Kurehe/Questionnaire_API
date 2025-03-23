@@ -1,4 +1,4 @@
-﻿namespace DataAccesslayer.Entities
+﻿namespace DataAccessLayer.Entities
 {
     /// <summary>
     /// Информация об анкете

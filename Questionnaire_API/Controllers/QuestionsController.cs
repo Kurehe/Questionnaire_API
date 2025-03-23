@@ -46,16 +46,16 @@ namespace Questionnaire_API.Controllers
         /// <param name="request"></param>
         /// <returns>Возвращаемый Ид может быть равен Null в случае если вопросы в анкете кончились</returns>
         [HttpPost]
-        public async Task<IActionResult> SaveAnswerQuestion(Guid RespondentGuid, int IdQuestion, int IdAnswer)
+        public async Task<IActionResult> SaveAnswerQuestion(Guid respondentGuid, int idQuestion, int idAnswer)
         {
-            await questionService.UpdateAnswerRespondent(RespondentGuid, IdQuestion, IdAnswer);
-            int nextQuetId = await questionService.NextIdQuestion(RespondentGuid);
+            await questionService.UpdateAnswerRespondent(respondentGuid, idQuestion, idAnswer);
+            int nextQuestionId = await questionService.NextIdQuestion(respondentGuid);
 
-            if (nextQuetId == 0)
+            if (nextQuestionId == 0)
             {
                 return NoContent();
             }
-            return Ok(nextQuetId);
+            return Ok(nextQuestionId);
         }
     }
 }

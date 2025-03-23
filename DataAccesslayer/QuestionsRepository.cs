@@ -1,9 +1,9 @@
-﻿using DataAccesslayer.AppContext;
-using DataAccesslayer.Entities;
+﻿using DataAccessLayer.AppContext;
+using DataAccessLayer.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
-namespace DataAccesslayer
+namespace DataAccessLayer
 {
     internal class QuestionsRepository : IQuestionsRepository
     {
@@ -16,35 +16,33 @@ namespace DataAccesslayer
             this.logger = logger;
         }
 
-        public async Task<Question?> GetQuestionById(int QuestionId)
+        public async Task<Question?> GetQuestionById(int questionId)
         {
             return await context.Questions
                 .Include(x => x.Answer)
-                .FirstOrDefaultAsync(x => x.Id == QuestionId);
+                .FirstOrDefaultAsync(x => x.Id == questionId);
         }
 
-        public async Task<Interview?> GetInterviewByGuid(Guid Guid)
+        public async Task<Interview?> GetInterviewByGuid(Guid guid)
         {
             var interview = await context.Interviews
                 .Include(x => x.Results)
-                .FirstOrDefaultAsync(x => x.Id == Guid);
+                .FirstOrDefaultAsync(x => x.Id == guid);
             return interview;
         }
 
-        public async Task AddAnswerRespondent(Guid guid, int QuestionID, int AnswerId)
+        public async Task AddAnswerRespondent(Guid guid, int questionID, int answerId)
         {
-            var interw = await GetInterviewByGuid(guid);
-            var quest = await context.Questions.FirstOrDefaultAsync(x => x.Id == QuestionID);
-            var answer = await context.Answers.FirstOrDefaultAsync(x => x.Id == AnswerId);
+            var interview = await GetInterviewByGuid(guid);
+            var question = await context.Questions.FirstOrDefaultAsync(x => x.Id == questionID);
+            var answer = await context.Answers.FirstOrDefaultAsync(x => x.Id == answerId);
 
-            if (interw == null) { return; }
-            if (quest == null) { return; }
-            if (answer == null) { return; }
+            if (interview == null || question == null || answer == null) { return; }
 
-            interw.Results.Add(new Result
+            interview.Results.Add(new Result
             {
-                Interview = interw,
-                Question = quest,
+                Interview = interview,
+                Question = question,
                 Answer = answer
             });
 
@@ -53,25 +51,25 @@ namespace DataAccesslayer
 
         public async Task<List<Question>> GetQuestionsInterviewByGuid(Guid guid)
         {
-            var interwRes = await context.Interviews
+            var interview = await context.Interviews
                 .Include(x => x.Survey)
                 .FirstOrDefaultAsync(x => x.Id == guid);
 
             var survey = await context.Surveys
                 .Include(x => x.Questions)
-                .FirstOrDefaultAsync(x => x == interwRes.Survey);
+                .FirstOrDefaultAsync(x => x == interview.Survey);
 
             return survey.Questions.ToList();
         }
 
         public async Task InterviewSurveyComplete(Guid guid)
         {
-            var interw = await GetInterviewByGuid(guid);
-            
-            interw.IsSurveyCompleted = true;
-            interw.EndSurveyTime = DateTime.UtcNow;
+            var interview = await GetInterviewByGuid(guid);
 
-            context.Update(interw);
+            interview.IsSurveyCompleted = true;
+            interview.EndSurveyTime = DateTime.UtcNow;
+
+            context.Update(interview);
             await context.SaveChangesAsync();
         }
     }

@@ -1,34 +1,34 @@
-﻿using DataAccesslayer.Entities;
+﻿using DataAccessLayer.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataAccesslayer
+namespace DataAccessLayer
 {
     public interface IQuestionsRepository
     {
         /// <summary>
         /// Получить информацию о респонденте
         /// </summary>
-        /// <param name="Guid"></param>
+        /// <param name="guid"></param>
         /// <returns></returns>
-        Task<Interview?> GetInterviewByGuid(Guid Guid);
+        Task<Interview?> GetInterviewByGuid(Guid guid);
         /// <summary>
         /// Получить информацию о вопросе по его Id
         /// </summary>
-        /// <param name="QuestionId">Id вопроса</param>
+        /// <param name="questionId">Id вопроса</param>
         /// <returns></returns>
-        Task<Question?> GetQuestionById(int QuestionId);
+        Task<Question?> GetQuestionById(int questionId);
         /// <summary>
         /// Добавить ответ респондента в БД
         /// </summary>
         /// <param name="guid"></param>
-        /// <param name="QuestionID"></param>
-        /// <param name="AnswerId"></param>
+        /// <param name="questionID"></param>
+        /// <param name="answerId"></param>
         /// <returns></returns>
-        Task AddAnswerRespondent(Guid guid, int QuestionID, int AnswerId);
+        Task AddAnswerRespondent(Guid guid, int questionID, int answerId);
         /// <summary>
         /// Получить вопросы анкеты, которую проходит респондент
         /// </summary>

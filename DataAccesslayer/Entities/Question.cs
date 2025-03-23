@@ -1,4 +1,4 @@
-﻿namespace DataAccesslayer.Entities
+﻿namespace DataAccessLayer.Entities
 {
     /// <summary>
     /// Вопрос анкеты
@@ -12,7 +12,7 @@
         /// <summary>
         /// Текст вопроса
         /// </summary>
-        public string TextQuestion { get; set; }
+        public required string TextQuestion { get; set; }
         /// <summary>
         /// Пояснение к вопросу (его может и не быть)
         /// </summary>

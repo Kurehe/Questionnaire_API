@@ -1,4 +1,4 @@
-﻿namespace DataAccesslayer.Entities
+﻿namespace DataAccessLayer.Entities
 {
     /// <summary>
     /// Информация об интервью (отдельной сессии прохождения анкеты конкретным человеком)
@@ -27,7 +27,7 @@
         /// <summary>
         /// Анкета которая проходиться респондентом
         /// </summary>
-        public Survey Survey { get; set; }
+        public required Survey Survey { get; set; }
 
         /// <summary>
         /// Ответы респондента

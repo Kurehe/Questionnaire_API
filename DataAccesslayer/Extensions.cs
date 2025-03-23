@@ -1,9 +1,9 @@
-﻿using DataAccesslayer.AppContext;
+﻿using DataAccessLayer.AppContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace DataAccesslayer
+namespace DataAccessLayer
 {
     public static class Extensions
     {
